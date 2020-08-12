@@ -18,5 +18,6 @@ router.post(
   postController.store
 );
 router.patch("/:id", hasDescription, postController.update);
+router.delete("/:id", postController.delete);
 
 module.exports = router;
