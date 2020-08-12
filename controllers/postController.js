@@ -3,9 +3,16 @@ const validationHandler = require("../validation/validationHandler");
 
 exports.index = async (req, res, next) => {
   try {
+    const pagination = req.query.pagination
+      ? parseInt(req.query.pagination)
+      : 10;
+    const page = req.query.page ? parseInt(req.query.page) : 1;
+
     const posts = await Post.find({
       userId: { $in: [...req.user.following, req.user._id] },
     })
+      .skip((page - 1) * pagination)
+      .limit(pagination)
       .populate("user")
       .sort({ createdAt: -1 });
     res.send(posts);
