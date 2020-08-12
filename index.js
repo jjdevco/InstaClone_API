@@ -3,8 +3,9 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const errorHandler = require("./middlewares/errorHandler");
-// Routes
-const postRoutes = require("./routes/posts");
+
+// Routes Handlers
+const postsRoutes = require("./routes/posts");
 
 const app = express();
 
@@ -13,7 +14,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/api/posts", postRoutes);
+app.use("/api/posts", postsRoutes);
 
 // Error Handler Middleware
 app.use(errorHandler);
