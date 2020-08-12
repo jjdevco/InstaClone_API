@@ -1,15 +1,15 @@
 "use strict";
 
-const env = require("dotenv");
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+
+const passportJWT = require("./middlewares/passportJWT")();
 const errorHandler = require("./middlewares/errorHandler");
 const initConnection = require("./helpers/dbInit");
-const apiRoutes = require("./routes/api");
 
-env.config();
+const apiRoutes = require("./routes/api");
 
 const app = express();
 
@@ -20,6 +20,8 @@ app.use(cors({ origin: "*" }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(passportJWT.initialize());
 
 // Routes
 apiRoutes(app);
