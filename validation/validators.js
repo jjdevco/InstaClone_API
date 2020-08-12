@@ -1,8 +1,13 @@
-const { body } = require("express-validator");
+const { body, check } = require("express-validator");
 
 exports.isEmail = body("email")
   .isEmail()
-  .withMessage("Email field must contain a correct email");
+  .withMessage("Email field must contain a valid email");
+
+exports.hasValidId = check("id")
+  .exists()
+  .isLength({ min: 10 })
+  .withMessage("Id field must contain a valid ID");
 
 exports.hasPassword = body("password")
   .exists()

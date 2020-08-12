@@ -12,6 +12,7 @@ exports.index = async (req, res, next) => {
 
 exports.show = async (req, res, next) => {
   try {
+    validationHandler(req);
     const post = await Post.findOne({ _id: req.params.id });
     res.send(post);
   } catch (err) {
@@ -50,6 +51,7 @@ exports.update = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
   try {
+    validationHandler(req);
     let post = await Post.findById(req.params.id);
 
     await post.delete();
