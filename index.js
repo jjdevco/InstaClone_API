@@ -1,26 +1,38 @@
+"use strict";
+
+const env = require("dotenv");
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const errorHandler = require("./middlewares/errorHandler");
+const initConnection = require("./helpers/dbInit");
+const apiRoutes = require("./routes/api");
 
-// Routes Handlers
-const postsRoutes = require("./routes/posts");
+env.config();
 
 const app = express();
 
 // Middlewares Initialization
-app.use(cors());
-app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/api/posts", postsRoutes);
+app.use(cors({ origin: "*" }));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Routes
+apiRoutes(app);
 
 // Error Handler Middleware
 app.use(errorHandler);
 
 // Listen PORT
 const port = process.env.PORT || 5000;
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+
+// Database connection and server listen
+initConnection(() => {
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+  });
 });
