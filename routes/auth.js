@@ -4,8 +4,12 @@ const router = express.Router();
 // Controllers
 const authController = require("../controllers/authController");
 
-// Routes
+// Validators
+const { isEmail, hasPassword, hasName } = require("../validation/validators");
 
-router.post("login", authController.login);
+// Routes
+router.post("/login", [isEmail, hasPassword], authController.login);
+router.post("/signup", [isEmail, hasPassword, hasName], authController.signup);
+router.get("/me", authController.me);
 
 module.exports = router;
