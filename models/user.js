@@ -3,11 +3,14 @@ const bcrypt = require("bcrypt");
 
 const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
-  email: { type: String, required: true },
-  password: { type: String, required: true, select: false },
-  name: { type: String, required: true },
-});
+const UserSchema = new Schema(
+  {
+    email: { type: String, required: true },
+    password: { type: String, required: true, select: false },
+    name: { type: String, required: true },
+  },
+  { versionKey: false }
+);
 
 UserSchema.methods.encryptPassword = async (password) => {
   const salt = await bcrypt.genSalt(5);

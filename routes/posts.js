@@ -13,7 +13,7 @@ router.get("/", postController.index);
 router.get("/:id", hasValidId, postController.show);
 router.post(
   "/",
-  [uploadImage("posts").single("image"), hasValidId, hasDescription],
+  [uploadImage("posts").single("image"), hasDescription],
   postController.store
 );
 router.patch("/:id", [hasValidId, hasDescription], postController.update);
