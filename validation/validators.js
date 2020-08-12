@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body, check } = require("express-validator");
 
 exports.hasDescription = body("description")
   .isLength({ min: 6 })
